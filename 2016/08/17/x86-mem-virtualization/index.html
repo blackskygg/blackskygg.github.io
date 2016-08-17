@@ -30,8 +30,8 @@ GOS和HOS频繁切换导致的TLB失效
 
 MMU半虚拟化
 介绍由VMM在其中牵线搭桥，将中间地址层（客户物理地址）通过由VMM保管的一个转换表（机器地址–&amp;gt;客户">
-<meta property="og:image" content="https://app.yinxiang.com/shard/s58/res/64a73118-6e8b-419d-bf0f-83eea2cb780c">
-<meta property="og:updated_time" content="2016-08-17T14:19:32.432Z">
+<meta property="og:image" content="https://www.ibm.com/developerworks/cn/linux/l-cn-kvm-mem/image004.gif">
+<meta property="og:updated_time" content="2016-08-17T15:43:56.360Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="x86内存虚拟化技术">
 <meta name="twitter:description" content="内存虚拟化会带来的问题
@@ -44,7 +44,7 @@ GOS和HOS频繁切换导致的TLB失效
 
 MMU半虚拟化
 介绍由VMM在其中牵线搭桥，将中间地址层（客户物理地址）通过由VMM保管的一个转换表（机器地址–&amp;gt;客户">
-<meta name="twitter:image" content="https://app.yinxiang.com/shard/s58/res/64a73118-6e8b-419d-bf0f-83eea2cb780c">
+<meta name="twitter:image" content="https://www.ibm.com/developerworks/cn/linux/l-cn-kvm-mem/image004.gif">
   
     <link rel="alternative" href="/atom.xml" title="BLOG - Blackskygg&#39;s LOG" type="application/atom+xml">
   
@@ -137,7 +137,7 @@ MMU半虚拟化
 <h3 id="效率-1"><a href="#效率-1" class="headerlink" title="效率"></a>效率</h3><p>不需要修改内核，但是效率低下。<br>首先是时间开销，由于GOS 构造页表时不会主动通知VMM，VMM 必须等到GOS 发生缺页时通过分析缺页原因，再为其补全影子页表。此过程中VMM 需要通过模拟MMU 遍历GOS的页表，方能获得GOS 所维护的地址映射关系（虚拟地址–&gt;客户物理地址），这种间接的手段要比半虚拟化低效很多。另外，由于每次缺页都会造成上下文切换，会导致TLB频繁失效，造成更大的性能损失。<br>其次是空间开销，VMM 需要支持多个虚拟机同时运行，而每个虚拟机的GOS 通常会为其上运行的每个进程都创建一套页表系统，因此影子页表的空间开销会随着进程的数量的增多而迅速增大，而GOS 的进程数量是VMM不可控的。减小空间开销的一种方法是只为当前进程的页表维护影子页表，这样做虽然将空间开销限制在了常数级别，但是却大大增加了上下文切换的时间开销：VMM 需要在GOS 的每个进程切换时重构新进程的所有影子页表。在空间开销和时间开销中做出权衡的方法是使用影子页表缓存（Shadow Page Table Cache），即VMM 在内存中维护部分最近使用过的影子页表，只有当影子页表在缓存中找不到时，才构建一个新的，但仍然不能有一个质的改变。</p>
 <h2 id="硬件虚拟化（VT-x）"><a href="#硬件虚拟化（VT-x）" class="headerlink" title="硬件虚拟化（VT-x）"></a>硬件虚拟化（VT-x）</h2><hr>
 <h3 id="介绍-2"><a href="#介绍-2" class="headerlink" title="介绍"></a>介绍</h3><p>VMX指令集通过引入了一个可以由VMM通过VMCS来监控其各种行为的非根操作环境（non-root）来解决CPU虚拟化中ring aliasing和ring compression的问题，提供了陷入机制，可以监控各种敏感指令。由于这部分由硬件实现，故大大提高了效率。<br>对内存虚拟化的支持：引入了EPT（extended page table）。<br>EPT 技术在原有客户机页表对客户机虚拟地址到客户机物理地址映射的基础上，又引入了 EPT 页表来实现客户机物理地址到宿主机物理地址的另一次映射，这两次地址映射都是由硬件自动完成。客户机运行时，客户机页表被载入 CR3，而 EPT 页表被载入专门的 EPT 页表指针寄存器 EPTP。EPT 页表对地址的映射机理与客户机页表对地址的映射机理相同，下图 1 出示了一个页面大小为 4K 的映射过程：</p>
-<p><img src="https://app.yinxiang.com/shard/s58/res/64a73118-6e8b-419d-bf0f-83eea2cb780c"></p>
+<p><img src="https://www.ibm.com/developerworks/cn/linux/l-cn-kvm-mem/image004.gif"></p>
 <p>图 1.EPT 页表转换</p>
 <p>在客户机物理地址到宿主机物理地址转换的过程中，由于缺页、写权限不足等原因也会导致客户机退出，产生 EPT 异常。对于 EPT 缺页异常，KVM 首先根据引起异常的客户机物理地址，映射到对应的宿主机虚拟地址，然后为此虚拟地址分配新的物理页，最后 KVM 再更新 EPT 页表，建立起引起异常的客户机物理地址到宿主机物理地址之间的映射。对 EPT 写权限引起的异常，KVM 则通过更新相应的 EPT 页表来解决。<br>此外VT-x技术还引入了VCPUID的概念，实现了带tag的TLB，降低了由TLB失效所带来的性能损失。</p>
 <h3 id="安全-2"><a href="#安全-2" class="headerlink" title="安全"></a>安全</h3><p>异常的监控与捕获很大程度上交给了速度较快的硬件。由硬件来监控GOS的异常行为，由于硬件与软件之间存在天然的隔离，故硬件的监控是可信任的，在监控能到异常之后，会将控制权交由VMM来采取相应的措施。总的来说，是在软硬件天然隔离的基础上保证了软件与硬件的协作监控的可信。而这个协作监控，又保证了其上GOS之间，以及VMM与GOS之间的有效隔离。</p>
@@ -147,7 +147,7 @@ MMU半虚拟化
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/08/17/x86-mem-virtualization/" data-id="cirz1zfxw0008f3nifeen57rk" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2016/08/17/x86-mem-virtualization/" data-id="cirz2jsjw0004sznihkrxqoik" class="article-share-link">Share</a>
       
 
       
