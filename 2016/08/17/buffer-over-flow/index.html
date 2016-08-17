@@ -1,0 +1,341 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Buffer Over Flow | BLOG - Blackskygg&#39;s LOG</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="This is not a passage, but just some pieces of reminders.
+Definition
+A buffer overflow happens when more data is written to or read from a buffer than the buffer can hold.
+real examples
+In fact the fi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Buffer Over Flow">
+<meta property="og:url" content="http://yoursite.com/2016/08/17/buffer-over-flow/index.html">
+<meta property="og:site_name" content="BLOG - Blackskygg's LOG">
+<meta property="og:description" content="This is not a passage, but just some pieces of reminders.
+Definition
+A buffer overflow happens when more data is written to or read from a buffer than the buffer can hold.
+real examples
+In fact the fi">
+<meta property="og:updated_time" content="2016-08-17T14:12:50.497Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Buffer Over Flow">
+<meta name="twitter:description" content="This is not a passage, but just some pieces of reminders.
+Definition
+A buffer overflow happens when more data is written to or read from a buffer than the buffer can hold.
+real examples
+In fact the fi">
+  
+    <link rel="alternative" href="/atom.xml" title="BLOG - Blackskygg&#39;s LOG" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+</head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">BLOG - Blackskygg&#39;s LOG</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="yoursite.com">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-buffer-over-flow" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/17/buffer-over-flow/" class="article-date">
+  <time datetime="2016-08-17T13:56:17.000Z" itemprop="datePublished">2016-08-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Buffer Over Flow
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>This is not a passage, but just some pieces of reminders.</p>
+<h2 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h2><hr>
+<p>A buffer overflow happens when more data is written to or read from a buffer than the buffer can hold.</p>
+<h2 id="real-examples"><a href="#real-examples" class="headerlink" title="real examples"></a>real examples</h2><hr>
+<p>In fact the first self-propagating Internet worm—1988’s Morris Worm—used a buffer overflow in the Unix finger daemon to spread from machine to machine.<br>And just this May, a buffer overflow found in a Linux driver left (potentially) millions of home and small office routers vulnerable to attack.<br>heart-bleed</p>
+<h2 id="stack-it-up"><a href="#stack-it-up" class="headerlink" title="stack it up"></a>stack it up</h2><hr>
+<p>function have address, which are almost fixed<br>the memory layout of a program, virtual address, libs, kernel space, and so on<br>esp, eip, ebp, return address and so on<br>code inject, shell code</p>
+<h2 id="an-attacker’s-toolkit"><a href="#an-attacker’s-toolkit" class="headerlink" title="an attacker’s toolkit"></a>an attacker’s toolkit</h2><hr>
+<p>instructions can contain zero-bytes : convert into equivalent sequences that avoid the problem byte<br>return address can contain zero-bytes(because they always lay in the lower part of the address space) : use “call esp” from elsewhere, may from the library or other functions(trampolining)<br>“NOP sled”</p>
+<h2 id="blame-c"><a href="#blame-c" class="headerlink" title="blame c"></a>blame c</h2><hr>
+<p>gets(), strcpy(), strcat() and even strncpy(), strncat() are unsafe</p>
+<h2 id="Fixing-the-leaks"><a href="#Fixing-the-leaks" class="headerlink" title="Fixing the leaks"></a>Fixing the leaks</h2><hr>
+<p>safe runtime environments<br>lots of awful c code still in use:legacy, performance, low level operations, many libs depends on C(even C# and friends)<br>and so are buffer overflows<br>some tools to analyze source code and running programs :<br> AddressSantizer  Valgrind, but they require active involvement of the developer<br>some systems to make it harder to exploit overflows :<br>W^X (“write exclusive-or execute”), DEP (“data execution prevention”), NX (“No Xecute”), XD (“eXecute Disable”), EVP (“Enhanced Virus Protection,” a rather peculiar term sometimes used by AMD), XN (“eXecute Never”), efficient and cost little, can be complemented by hardware, can be applied to existing programs retroactively just by updating the operating system to one that supports it(although hard for things like JVM and .NET), has been mainstream since 2004</p>
+<h2 id="Beyond-NX"><a href="#Beyond-NX" class="headerlink" title="Beyond NX"></a>Beyond NX</h2><hr>
+<p>system()(the so-called return-to-libc technique) : useful , but sometimes system() don’t take arguments from stacks, and calling multiple function is hard<br>a number of ways to extend return-to-libc : nonetheless limited<br>return-oriented-programming (ROP) : using gadgets , each gadget follows a particular pattern: it performs some operation (putting a value in a register, writing to memory, adding two registers, etc.) followed by a return instruction, some times you can find a Turing-complete set of these, these instructions can even be used to change the current state of the pages, turning them into excutable</p>
+<h2 id="Getting-random"><a href="#Getting-random" class="headerlink" title="Getting random"></a>Getting random</h2><hr>
+<p>Address Space Layout Randomization (ASLR) : it randomizes the position of the stack and the in-memory location of libraries and executables<br>it’s useful but hard to apply to current systems : it’s ok for dlls, but hard for linux and exes, (compatibility, performance)<br>but the range the address can be is limited on x86 : total memory is limited, libs must stay as close as they can, code always start at the beginning of a page, etc<br>thus, if the chance is 1/256, you can try it out for 256 times and you’ll succeed<br>the situation is better on x64, guessing is almost impossible<br>browsers : javascript, flash(both contain JIT), PDF plugin, Microsoft’s Office browser plugins(old version didn’t enable ASLR)<br>A never-ending war<br>Powerful protective systems such as ASLR and NX raise the bar for taking advantage of flaws and together have put the days of the simple stack buffer overflow behind us, but smart attackers can still combine multiple flaws to defeat these protections.<br>Microsoft’s EMET (“Enhanced Mitigation Experience Toolkit”) includes a range of semi-experimental protections that try to detect heap spraying or attempts to call certain critical functions in ROP-based exploits. But in the continuing digital arms war, even these have security techniques that have been defeated.<br>the difficulty (and hence cost) of exploiting flaws goes up with each new mitigation technique—but it’s a reminder of the need for constant vigilance.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2016/08/17/buffer-over-flow/" data-id="ciryzp83i0000f9ni1og0qdjs" class="article-share-link">Share</a>
+      
+
+      
+        <a href="http://yoursite.com/2016/08/17/buffer-over-flow/#ds-thread" class="article-comment-link">Comments</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Pieces/">Pieces</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Software-Security/">Software Security</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/08/17/virtio-host-guest-communication/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          使用virtio-serial实现guest OS与host的高效通信
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/08/17/gallon-jugs-and-euclid/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">倒水问题与欧几里德</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2016/08/17/buffer-over-flow/" data-title="Buffer Over Flow" data-url="http://yoursite.com/2016/08/17/buffer-over-flow/"></div>
+  </section>
+</section>
+      
+      <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mathematics-for-Computer-Science/">Mathematics for Computer Science</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Number-Theory/">Number Theory</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pieces/">Pieces</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Software-Security/">Software Security</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Virtualization/">Virtualization</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Mathematics-for-Computer-Science/" style="font-size: 10px;">Mathematics for Computer Science</a> <a href="/tags/Number-Theory/" style="font-size: 10px;">Number Theory</a> <a href="/tags/Pieces/" style="font-size: 10px;">Pieces</a> <a href="/tags/Software-Security/" style="font-size: 10px;">Software Security</a> <a href="/tags/Virtualization/" style="font-size: 20px;">Virtualization</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">4</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/08/17/x86-mem-virtualization/">x86内存虚拟化技术</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/17/virtio-host-guest-communication/">使用virtio-serial实现guest OS与host的高效通信</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/17/buffer-over-flow/">Buffer Over Flow</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/17/gallon-jugs-and-euclid/">倒水问题与欧几里德</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="https://github.com/blackskygg" target="_blank">blackskygg&#39;s github</a>
+          </li>
+        
+          <li>
+            <a href="http://xiguabaobao.com" target="_blank">主题作者</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 blacksygg<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+<!-- 多说公共js代码 start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"blackskygg"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共js代码 end -->
+
+
+<!-- 百度分享 start -->
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+                processEscapes: true
+                    
+}
+  
+        });
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+                  
+}
+    
+        });
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Queue(function() {
+            var all = MathJax.Hub.getAllJax(), i;
+            for(i=0; i < all.length; i += 1) {
+                            all[i].SourceElement().parentNode.className += ' has-jax';
+                                    
+            }
+                
+        });
+</script>
+
+<script type="text/javascript" src="http://cdn.bootcss.com/mathjax/2.5.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
