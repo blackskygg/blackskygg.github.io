@@ -19,14 +19,13 @@ virtio是kvm/Linux中的io半虚拟化解决方案，其前端驱动运行在Gue
 <meta name="twitter:title" content="使用virtio-serial实现guest OS与host的高效通信">
 <meta name="twitter:description" content="Virtio简介
 virtio是kvm/Linux中的io半虚拟化解决方案，其前端驱动运行在Guest OS的内核中，且已经被整合入Linux Kernel. 其后端驱动运行在qemu中负责接处理来自前端驱动的IO请求。由于virtio使用的是半虚拟化机制，使用virtio进行io可以达到几乎接近native的性能。目前virtio已经成为kvm具体介绍可以查看：http://www.ibm.co">
-  
-    <link rel="alternative" href="/atom.xml" title="BLOG - Blackskygg&#39;s LOG" type="application/atom+xml">
+<meta name="twitter:creator" content="@blackskygg">
+<link rel="publisher" href="blackskygg@gmail.com">
   
   
     <link rel="icon" href="/favicon.png">
   
   <link rel="stylesheet" href="/css/style.css">
-  <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
   
 </head>
@@ -41,6 +40,10 @@ virtio是kvm/Linux中的io半虚拟化解决方案，其前端驱动运行在Gue
         <a href="/" id="logo">BLOG - Blackskygg&#39;s LOG</a>
       </h1>
       
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Blackskygg&#39;s LOG</a>
+        </h2>
+      
     </div>
     <div id="header-inner" class="inner">
       <nav id="main-nav">
@@ -52,8 +55,6 @@ virtio是kvm/Linux中的io半虚拟化解决方案，其前端驱动运行在Gue
         
       </nav>
       <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
@@ -177,7 +178,7 @@ int main()
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/08/17/virtio-host-guest-communication/" data-id="cirz2jsjv0003szni3g98068p" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2016/08/17/virtio-host-guest-communication/" data-id="cirz3ld0200030mni935xkwj9" class="article-share-link" data-share="baidu">Share</a>
       
 
       
@@ -291,6 +292,10 @@ int main()
             <a href="http://xiguabaobao.com" target="_blank">主题作者</a>
           </li>
         
+          <li>
+            <a href="http://reqianduan.com" target="_blank">热前端</a>
+          </li>
+        
       </ul>
     </div>
   </div>
@@ -331,7 +336,7 @@ var duoshuoQuery = {short_name:"blackskygg"};
   (function() {
     var ds = document.createElement('script');
     ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'https:') + '//static.duoshuo.com/embed.js';
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
     ds.charset = 'UTF-8';
     (document.getElementsByTagName('head')[0]
      || document.getElementsByTagName('body')[0]).appendChild(ds);
@@ -342,10 +347,24 @@ var duoshuoQuery = {short_name:"blackskygg"};
 
 <!-- 百度分享 start -->
 
+<div id="article-share-box" class="article-share-box">
+  <div id="bdshare" class="bdsharebuttonbox article-share-links">
+    <a class="article-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a class="article-share-weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a class="article-share-qq" data-cmd="sqq" title="分享到QQ"></a>
+    <a class="article-share-renren" data-cmd="renren" title="分享到人人网"></a>
+    <a class="article-share-more" data-cmd="more" title="更多"></a>
+  </div>
+</div>
+<script>window._bd_share_config={"common":{},"share":{"bdCustomStyle":"/css/bdshare.css"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='https://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];</script>
+
 <!-- 百度分享 end -->
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
 
@@ -383,7 +402,7 @@ MathJax.Hub.Queue(function() {
         });
 </script>
 
-<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.5.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 
 
