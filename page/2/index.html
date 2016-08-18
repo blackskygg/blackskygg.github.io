@@ -4,21 +4,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>使用virtio-serial实现guest OS与host的高效通信 | BLOG - Blackskygg&#39;s LOG</title>
+  <title>BLOG - Blackskygg&#39;s LOG</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Virtio简介
-virtio是kvm/Linux中的io半虚拟化解决方案，其前端驱动运行在Guest OS的内核中，且已经被整合入Linux Kernel. 其后端驱动运行在qemu中负责接处理来自前端驱动的IO请求。由于virtio使用的是半虚拟化机制，使用virtio进行io可以达到几乎接近native的性能。目前virtio已经成为kvm具体介绍可以查看：http://www.ibm.co">
-<meta property="og:type" content="article">
-<meta property="og:title" content="使用virtio-serial实现guest OS与host的高效通信">
-<meta property="og:url" content="https://blackskygg.github.io/2016/08/17/virtio-host-guest-communication/index.html">
+  <meta name="description" content="Blackskygg&apos;s LOG">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BLOG - Blackskygg's LOG">
+<meta property="og:url" content="https://blackskygg.github.io/page/2/index.html">
 <meta property="og:site_name" content="BLOG - Blackskygg's LOG">
-<meta property="og:description" content="Virtio简介
-virtio是kvm/Linux中的io半虚拟化解决方案，其前端驱动运行在Guest OS的内核中，且已经被整合入Linux Kernel. 其后端驱动运行在qemu中负责接处理来自前端驱动的IO请求。由于virtio使用的是半虚拟化机制，使用virtio进行io可以达到几乎接近native的性能。目前virtio已经成为kvm具体介绍可以查看：http://www.ibm.co">
-<meta property="og:updated_time" content="2016-08-17T14:11:49.657Z">
+<meta property="og:description" content="Blackskygg&apos;s LOG">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用virtio-serial实现guest OS与host的高效通信">
-<meta name="twitter:description" content="Virtio简介
-virtio是kvm/Linux中的io半虚拟化解决方案，其前端驱动运行在Guest OS的内核中，且已经被整合入Linux Kernel. 其后端驱动运行在qemu中负责接处理来自前端驱动的IO请求。由于virtio使用的是半虚拟化机制，使用virtio进行io可以达到几乎接近native的性能。目前virtio已经成为kvm具体介绍可以查看：http://www.ibm.co">
+<meta name="twitter:title" content="BLOG - Blackskygg's LOG">
+<meta name="twitter:description" content="Blackskygg&apos;s LOG">
 <meta name="twitter:creator" content="@blackskygg">
 <link rel="publisher" href="blackskygg@gmail.com">
   
@@ -72,7 +68,9 @@ virtio是kvm/Linux中的io半虚拟化解决方案，其前端驱动运行在Gue
   </div>
 </header>
     <div class="outer">
-      <section id="main"><article id="post-virtio-host-guest-communication" class="article article-type-post" itemscope itemprop="blogPost">
+      <section id="main">
+  
+    <article id="post-virtio-host-guest-communication" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/08/17/virtio-host-guest-communication/" class="article-date">
   <time datetime="2016-08-17T14:02:30.000Z" itemprop="datePublished">2016-08-17</time>
@@ -85,8 +83,8 @@ virtio是kvm/Linux中的io半虚拟化解决方案，其前端驱动运行在Gue
       <header class="article-header">
         
   
-    <h1 class="article-title" itemprop="name">
-      使用virtio-serial实现guest OS与host的高效通信
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/17/virtio-host-guest-communication/">使用virtio-serial实现guest OS与host的高效通信</a>
     </h1>
   
 
@@ -191,33 +189,76 @@ int main()
     </footer>
   </div>
   
-    
-<nav id="article-nav">
-  
-    <a href="/2016/08/17/x86-mem-virtualization/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          x86内存虚拟化技术
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2016/08/17/buffer-over-flow/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Buffer Over Flow</div>
-    </a>
-  
-</nav>
+</article>
 
+
+  
+    <article id="post-buffer-over-flow" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/17/buffer-over-flow/" class="article-date">
+  <time datetime="2016-08-17T13:56:17.000Z" itemprop="datePublished">2016-08-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/17/buffer-over-flow/">Buffer Over Flow</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>This is not a passage, but just some pieces of reminders.</p>
+<h2 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h2><hr>
+<p>A buffer overflow happens when more data is written to or read from a buffer than the buffer can hold.</p>
+<h2 id="real-examples"><a href="#real-examples" class="headerlink" title="real examples"></a>real examples</h2><hr>
+<p>In fact the first self-propagating Internet worm—1988’s Morris Worm—used a buffer overflow in the Unix finger daemon to spread from machine to machine.<br>And just this May, a buffer overflow found in a Linux driver left (potentially) millions of home and small office routers vulnerable to attack.<br>heart-bleed</p>
+<h2 id="stack-it-up"><a href="#stack-it-up" class="headerlink" title="stack it up"></a>stack it up</h2><hr>
+<p>function have address, which are almost fixed<br>the memory layout of a program, virtual address, libs, kernel space, and so on<br>esp, eip, ebp, return address and so on<br>code inject, shell code</p>
+<h2 id="an-attacker’s-toolkit"><a href="#an-attacker’s-toolkit" class="headerlink" title="an attacker’s toolkit"></a>an attacker’s toolkit</h2><hr>
+<p>instructions can contain zero-bytes : convert into equivalent sequences that avoid the problem byte<br>return address can contain zero-bytes(because they always lay in the lower part of the address space) : use “call esp” from elsewhere, may from the library or other functions(trampolining)<br>“NOP sled”</p>
+<h2 id="blame-c"><a href="#blame-c" class="headerlink" title="blame c"></a>blame c</h2><hr>
+<p>gets(), strcpy(), strcat() and even strncpy(), strncat() are unsafe</p>
+<h2 id="Fixing-the-leaks"><a href="#Fixing-the-leaks" class="headerlink" title="Fixing the leaks"></a>Fixing the leaks</h2><hr>
+<p>safe runtime environments<br>lots of awful c code still in use:legacy, performance, low level operations, many libs depends on C(even C# and friends)<br>and so are buffer overflows<br>some tools to analyze source code and running programs :<br> AddressSantizer  Valgrind, but they require active involvement of the developer<br>some systems to make it harder to exploit overflows :<br>W^X (“write exclusive-or execute”), DEP (“data execution prevention”), NX (“No Xecute”), XD (“eXecute Disable”), EVP (“Enhanced Virus Protection,” a rather peculiar term sometimes used by AMD), XN (“eXecute Never”), efficient and cost little, can be complemented by hardware, can be applied to existing programs retroactively just by updating the operating system to one that supports it(although hard for things like JVM and .NET), has been mainstream since 2004</p>
+<h2 id="Beyond-NX"><a href="#Beyond-NX" class="headerlink" title="Beyond NX"></a>Beyond NX</h2><hr>
+<p>system()(the so-called return-to-libc technique) : useful , but sometimes system() don’t take arguments from stacks, and calling multiple function is hard<br>a number of ways to extend return-to-libc : nonetheless limited<br>return-oriented-programming (ROP) : using gadgets , each gadget follows a particular pattern: it performs some operation (putting a value in a register, writing to memory, adding two registers, etc.) followed by a return instruction, some times you can find a Turing-complete set of these, these instructions can even be used to change the current state of the pages, turning them into excutable</p>
+<h2 id="Getting-random"><a href="#Getting-random" class="headerlink" title="Getting random"></a>Getting random</h2><hr>
+<p>Address Space Layout Randomization (ASLR) : it randomizes the position of the stack and the in-memory location of libraries and executables<br>it’s useful but hard to apply to current systems : it’s ok for dlls, but hard for linux and exes, (compatibility, performance)<br>but the range the address can be is limited on x86 : total memory is limited, libs must stay as close as they can, code always start at the beginning of a page, etc<br>thus, if the chance is 1/256, you can try it out for 256 times and you’ll succeed<br>the situation is better on x64, guessing is almost impossible<br>browsers : javascript, flash(both contain JIT), PDF plugin, Microsoft’s Office browser plugins(old version didn’t enable ASLR)<br>A never-ending war<br>Powerful protective systems such as ASLR and NX raise the bar for taking advantage of flaws and together have put the days of the simple stack buffer overflow behind us, but smart attackers can still combine multiple flaws to defeat these protections.<br>Microsoft’s EMET (“Enhanced Mitigation Experience Toolkit”) includes a range of semi-experimental protections that try to detect heap spraying or attempts to call certain critical functions in ROP-based exploits. But in the continuing digital arms war, even these have security techniques that have been defeated.<br>the difficulty (and hence cost) of exploiting flaws goes up with each new mitigation technique—but it’s a reminder of the need for constant vigilance.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="https://blackskygg.github.io/2016/08/17/buffer-over-flow/" data-id="cis0h73nj0000flni2ys73ws3" class="article-share-link" data-share="baidu">Share</a>
+      
+
+      
+        <a href="https://blackskygg.github.io/2016/08/17/buffer-over-flow/#ds-thread" class="article-comment-link">Comments</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Pieces/">Pieces</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Software-Security/">Software Security</a></li></ul>
+
+    </footer>
+  </div>
   
 </article>
 
 
-  <section id="comments">
-    <div id="ds-thread" class="ds-thread" data-thread-key="2016/08/17/virtio-host-guest-communication/" data-title="使用virtio-serial实现guest OS与host的高效通信" data-url="https://blackskygg.github.io/2016/08/17/virtio-host-guest-communication/"></div>
-  </section>
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+    </nav>
+  
 </section>
       
       <aside id="sidebar">

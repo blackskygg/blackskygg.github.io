@@ -4,12 +4,12 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives | BLOG - Blackskygg&#39;s LOG</title>
+  <title>BLOG - Blackskygg&#39;s LOG</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Blackskygg&apos;s LOG">
 <meta property="og:type" content="website">
 <meta property="og:title" content="BLOG - Blackskygg's LOG">
-<meta property="og:url" content="https://blackskygg.github.io/archives/index.html">
+<meta property="og:url" content="https://blackskygg.github.io/page/3/index.html">
 <meta property="og:site_name" content="BLOG - Blackskygg's LOG">
 <meta property="og:description" content="Blackskygg&apos;s LOG">
 <meta name="twitter:card" content="summary">
@@ -70,55 +70,116 @@
     <div class="outer">
       <section id="main">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/08/18/rsa/" class="archive-article-date">
-  <time datetime="2016-08-18T09:57:30.000Z" itemprop="datePublished">Aug 18</time>
+    <article id="post-gallon-jugs-and-euclid" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/17/gallon-jugs-and-euclid/" class="article-date">
+  <time datetime="2016-08-17T09:28:03.000Z" itemprop="datePublished">2016-08-17</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/18/rsa/">21天精通RSA(误)</a>
+      <a class="article-title" href="/2016/08/17/gallon-jugs-and-euclid/">倒水问题与欧几里德</a>
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/08/17/x86-mem-virtualization/" class="archive-article-date">
-  <time datetime="2016-08-17T14:13:07.000Z" itemprop="datePublished">Aug 17</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/17/x86-mem-virtualization/">x86内存虚拟化技术</a>
-    </h1>
-  
+        <p>这个系列是MIT Open Courseware Mathematics for Computer Science<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-042j-mathematics-for-computer-science-fall-2010/" target="_blank" rel="external">^1</a>的记录</p>
+<h2 id="倒水问题"><a href="#倒水问题" class="headerlink" title="倒水问题"></a>倒水问题</h2><hr>
+<p>有这么一个游戏：有两个桶a和b,容量分别是3 gal和5 gal,然后让你用这两个桶量出4 gal水来.如果用(a中剩余的水, b中剩余的水)来表示一个状态的话,整个过程表述如下:<br>$$(0, 0)\rightarrow(3, 0)\rightarrow(0, 3)\rightarrow(3, 3)\rightarrow(1, 5)\rightarrow(1, 0)\rightarrow(0, 1)\rightarrow(3, 1)\rightarrow(0, 4)$$</p>
+<p>但是如果把a和b的容量换成3 gal和6 gal呢,还能量出刚好4 gal吗？直觉告诉我们不能.接下来为这个直觉寻找理论依据.</p>
+<h2 id="问题的形式化描述"><a href="#问题的形式化描述" class="headerlink" title="问题的形式化描述"></a>问题的形式化描述</h2><hr>
+<p>对于上述的问题, 我们先对其进行形式化：</p>
+<blockquote>
+<p>$给定两个桶a,b,桶a的容量为va,桶b的容量为vb. 且假定va \leq vb.$<br>$可以进行的操作有：清空一个桶,填满一个桶和将一个桶的水倒入另一个桶中.$<br>$以(x,y)记某个时刻的状态,表示a桶中有x \space gal水, b桶中有y \space gal水.$<br>$对与一个给定的数字r(0 \leq r \leq vb),能否达到某个状态(x’,y’), 使得r = x’ \lor r = y’?$</p>
+</blockquote>
+<p>于是,整个过程是一个状态机,其起始状态为(0,0).可能的转换描述如下:</p>
+<blockquote>
+<ul>
+<li>$(x,y)\rightarrow(va,x).$</li>
+<li>$(x,y)\rightarrow(x,vb).$</li>
+<li>$(x,y)\rightarrow(0,y).$</li>
+<li>$(x,y)\rightarrow(x,0).$</li>
+<li>$(x,y)\rightarrow(x+y-vb,vb), if \space x+y \geq vb$</li>
+<li>$(x,y)\rightarrow(0,x+y), if \space x+y \leq vb$</li>
+<li>$(x,y)\rightarrow(va,x+y-va), if \space x+y \geq va$</li>
+<li>$(x,y)\rightarrow(x+y,0), if \space x+y \leq va$</li>
+</ul>
+</blockquote>
+<h2 id="问题的几个结论"><a href="#问题的几个结论" class="headerlink" title="问题的几个结论"></a>问题的几个结论</h2><hr>
+<blockquote>
+<p>$定理1: \forall k \forall(x,y)(k|va \land k|vb \rightarrow k|x \land k|y).$</p>
+</blockquote>
+<p>可以很简单地用归纳法对以下invariant进行证明.</p>
+<blockquote>
+<p>$P(n): (x,y)为n轮转换后的状态 \rightarrow k|x \land k|y.$</p>
+</blockquote>
+<p>(0,0)时显然成立,下面证对于转换$(x,y)\rightarrow(x+y-vb,vb), if \space x+y \geq vb$成立,其余类似.</p>
+<p>$let \space (x’,y’) \space be \space the \space next \space state$<br>$x’=x+y-vb, y’=vb$<br>$k|vb \implies k|y’$<br>$k|vb, k|x, k|y \implies k|x+y-vb \implies k|x’$<br>$P(n+1) \space holds$</p>
+<p>定理1得证.<br>于是,对于$va=3,vb=6,r=4$的情况,由于对于任何$(x,y)$都有$3|x \land 3|y$,故不可能有$x=4 \lor y=4$的状态.<br>那么能否描述出可能达到的状态所满足的性质呢. 答案是肯定的. 首先可以确定的是所有状态$(x,y)$, 都满足x和y都是va,vb的线性组合,这是显然的. 其次,有如下事实.</p>
+<blockquote>
+<p>$定理2: 所有va和vb的线性组合l1和l2(0 \leq l1, l2 \leq vb)所组成的状态(l1, l2)都是可到达的.$</p>
+</blockquote>
+<p>首先,注意到对于任意的$l=p \times va + q \times vb(0 \leq l \leq vb)$, 无论p的正负, 都有办法写成$l=p’ \times va + q’ \times vb, p \gt 0$的形式.<br>理由如下：<br>对于$l=p \times va + q \times vb$,有$l=(p + m \times vb)\times va+(q-m \times va) \times vb$.<br>于是可以通过调整m的大小来将$p’=p + m \times vb$变为正数.<br>而对于$l=p’ \times va + q’ \times vb, p \gt 0$, 可以通过以下算法得到.</p>
+<pre><code>for i in [0, p&apos;) {
+    fill a;
+    while (a is not empty) {
+        if b is full {
+            empty b;
+        }
+        pour all the water in a into b;
+    }
+}
+</code></pre><p>设最后的状态为$(x’, y’)$, 不难看出有$x’ = 0 \land y’ = p’ \times va + h \times vb$, 而由于限制条件$(0 \leq l \leq vb)$的存在. 可以得到$h=q’, 故y’ = l$. 目的达到. 定理二得证.</p>
+<p>再回到定理1.<br>在众多满足条件的k中,gcd(va, vb)应该算是比较特殊的,而计算gcd(va, vb)的方法中,最常用的就是欧几里德算法.其证明也相对简单（只需证对于$a = p \times b + rem(a,b), 有gcd(a, b) = gcd(p, rem(a,b)$即可）.<br>那么问题来了, gcd(va, vb)是否是va, vb的一个线性组合呢？ 如果是的话. 由于所有va, vb在$(0, vb]$内的线性组合$l$都有$gcd(va,vb)|l$, 故gcd(va, vb)就有了一个新身份:<br>va, vb的最小正线性组合！<br>事实是不仅有, 而且还能很方便的算出线性组合系数,这个计算的方法,就是扩展欧几里德算法.</p>
+<h2 id="扩展欧几里德"><a href="#扩展欧几里德" class="headerlink" title="扩展欧几里德"></a>扩展欧几里德</h2><hr>
+<p>首先还是来证明一下这一点:</p>
+<blockquote>
+<p>$定理3:gcd(a,b)是a,b的一个线性组合.$</p>
+</blockquote>
+<p>首先来证明:</p>
+<blockquote>
+<p>$如果x, y都是a和b的线性组合, 那么rem(x, y)也是a和b的线性组合$</p>
+</blockquote>
+<p>这很显然：</p>
+<blockquote>
+<p>$令x=p1 \times a+q1 \times b, y=p2 \times a+q2 \times b$<br>$令x = k \times y + rem(x,y)$<br>$有rem(x,y) = x - k \times y \implies rem(x,y)=p1 \times a+q1 \times b -k \times p2 \times a - k \times q2 \times b$<br>$\implies rem(x,y)=(p1 - k \times p2) \times a + (q1 - k \times q2) \times b$<br>$\implies rem(x,y)为a和b的线性组合$</p>
+</blockquote>
+<p>也就是说在欧几里德算法计算出的序列$(a, b)\rightarrow(b, rem(b,a))\rightarrow\cdots\rightarrow(x,y)\rightarrow\cdots\rightarrow(rem(t1, t2), 0)$中.<br>由归纳法可知，对于任意一个中间结果$(x, y)$，都有x和y是b的线性组合. 而最终的结果$rem(t1, t2) = gcd(a, b)$, 自然也是a和b的一个线性组合.<br>至于扩展欧几里德算法本身，已经包含在上面的证明中了。</p>
 
-    </header>
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="https://blackskygg.github.io/2016/08/17/gallon-jugs-and-euclid/" data-id="cis0h73nn0001flniei2w8c3d" class="article-share-link" data-share="baidu">Share</a>
+      
+
+      
+        <a href="https://blackskygg.github.io/2016/08/17/gallon-jugs-and-euclid/#ds-thread" class="article-comment-link">Comments</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mathematics-for-Computer-Science/">Mathematics for Computer Science</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Number-Theory/">Number Theory</a></li></ul>
+
+    </footer>
   </div>
+  
 </article>
+
+
   
   
-    </div></section>
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    </nav>
   
 </section>
       
