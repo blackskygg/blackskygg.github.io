@@ -70,6 +70,113 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-rsa" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/18/rsa/" class="article-date">
+  <time datetime="2016-08-18T09:57:30.000Z" itemprop="datePublished">2016-08-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/18/rsa/">21天精通RSA(误)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这个系列是MIT Open Courseware Mathematics for Computer Science<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-042j-mathematics-for-computer-science-fall-2010/" target="_blank" rel="external">^1</a>的记录</p>
+<h2 id="同余"><a href="#同余" class="headerlink" title="同余"></a>同余</h2><p>a与b模n同余, 记作$a \equiv b(mod \space n)$, 如同字面上的意思, 它表示$rem(a, n) = rem(b, n)$. 等价地, 它还表示$n|(a-b)$.<br>考察$a = kn + rem(a, n)$, 发现$n|rem(a, n)-a$, 那么就有：</p>
+<blockquote>
+<ol>
+<li>$a \equiv rem(a, n)(mod \space n)$</li>
+</ol>
+</blockquote>
+<p>同余关系是等价关系, 因此自反, 传递且对称. 除此之外, 以下性质值得注意: </p>
+<blockquote>
+<ol>
+<li>$a \equiv b (mod \space n)\implies a+c \equiv b+c(mod \space n)$</li>
+<li>$a \equiv b (mod \space n)\implies ac \equiv bc(mod \space n)$</li>
+<li>$a \equiv b (mod \space n) \land c \equiv d (mod \space n) \implies a+b \equiv c+d(mod \space n)$</li>
+<li>$a \equiv b (mod \space n) \land c \equiv d (mod \space n) \implies ac \equiv bd(mod \space n)$</li>
+</ol>
+</blockquote>
+<p>这里只是证明一下4, 而3的证明类似, 其余的比较明显. </p>
+<blockquote>
+<p>$a \equiv b (mod \space n) \implies ac \equiv bc(mod \space n)$<br>$c \equiv d (mod \space n) \implies bc \equiv bd(mod \space n)$<br>$由传递性, ac \equiv bd(mod \space n)$</p>
+</blockquote>
+<p>事实上, 在我瞎折腾的过程中, 发现由传递性还可以得到另一个有趣的结果. 如果p, q互质, 那么有$tp \equiv 1(mod \space q)$, 此时如果有另一个数r满足$(r \equiv p(mod \space q)$的话, 由于$(tr \equiv tp(mod \space q)$, 故$tr \equiv 1(mod \space q)$, 也就是r, q互质.<br>也就是说. 如果p, q互质, 且r与p模q同余, 则, r与q也互质. </p>
+<p>这里只有$+-\times$, 但是却没有$/$. 考察$ka \equiv kb(mod \space n)$, 什么情况下能够把k从两边消掉呢.<br>之前说过$a \equiv b(mod \space n) \iff  n|(a-b)$, 那么也有$ka \equiv kb(mod \space n) \iff  n|k(a-b)$.<br>也就是说只要能保证$n|k(a-b) \implies n|(a-b)$就能保证$ka \equiv kb(mod \space n) \implies a \equiv b(mod \space n)$.<br>那么有一点是肯定的, 那就是n和k如果互质(relatively prime)的话, 那么必然满足上述条件, 当然也存在其它满足的情况, 有兴趣的可以深究, 但是现在我们只要知道以下事实就够了. </p>
+<blockquote>
+<ol>
+<li>$如果a, b互质, 有ka \equiv kb(mod \space n) \implies a \equiv b(mod \space n)$</li>
+</ol>
+</blockquote>
+<p>前一篇文章<a href="/2016/08/17/x86-mem-virtualization/">^2</a>曾经说过, gcd(a, b)实际上是a和b的最小线性组合. 而a, b互质又可以写成gcd(a, b)=1, 亦即$\exists t, a, 使得ta+sb=1$, 也就是说$ta \equiv 1(mod \space b)$.<br>我们定义t为a在mod b条件下的乘法逆元. 如此一来, 我们就有: </p>
+<blockquote>
+<ol>
+<li>$如果a, n互质, 则存在a在mod \space n条件下的乘法逆元$</li>
+</ol>
+</blockquote>
+<h2 id="欧拉函数"><a href="#欧拉函数" class="headerlink" title="欧拉函数"></a>欧拉函数</h2><p>介绍完同余, 来看看欧拉函数.<br>欧拉函数$\phi(n)$定义为小于n且于n互质的数的个数.<br>对于质数p, 显然有$\phi(p)=p-1$.<br>然后再来考察一堆互质的数p, q, 令r=pq. 定义比n小且与n互质的数的集合为Zn.<br>由p, q互质可知, 对于任意的一个$k \in Zr$, 都存在$ap + bq=k(mod \space r)$, 而且在mod r的语境下可以将a调整在(0, q), b调整到(0, p). 显然满足上述区间的a, b唯一(考虑$(a+mq)p+(b-mq-tq)p=k$), 而且a跟q互质, b跟p互质(否则与$k \in Zr$矛盾), 亦即$a \in Zq \land b \in Zp$. 于是有一个从$Zr$到$Zq \times Zp$的双射, 于是$\phi(pq) = \phi(p) \times \phi(q)$. 特别地, 如果p, q都是质数, 则$\phi(pq) = (p-1)(q-1)$. (事实上, 还可以用中国余剩定理反过来建立映射, 也可以证明).<br>由于合数可以唯一地表示为质数幂的乘积(算术基本定理), 一个自然的想法是研究质数幂的计算方法, 这样就可以构造出任意欧拉函数的计算方法了.<br>考察质数的幂$p^k$, 由于比p小且与p不互质的数有$(p, 2p, \space \cdots \space, (p^{k-1}-1)p)$共$p^{k-1}$个, 于是$\phi(p^{k})=p^k-p^{k-1}$.<br>那么就得到任何数的欧拉函数计算方法: </p>
+<blockquote>
+<ol>
+<li>$\phi(n)=n\Pi(1- \frac{1}{p_1})$</li>
+</ol>
+</blockquote>
+<p>(其实推了那么多对于RSA并没有什么卵用, 只是推着玩玩, 真正有用的只有”如果p, q都是质数, 则$\phi(pq) = (p-1)(q-1)$”这一句)</p>
+<h3 id="费马小定理"><a href="#费马小定理" class="headerlink" title="费马小定理"></a>费马小定理</h3><p>介绍欧拉函数之后之后, 就可以开始介绍费马小定理了. 费马小定理是这样说的: </p>
+<blockquote>
+<p>$gcd(q, n)=1 \implies q^{\phi(n)} \equiv 1(mod \space n)$</p>
+</blockquote>
+<p>这看起来就有点吓人了, 但其实有了前面的铺垫, 证明起来还是很简单的. 首先来证明一个小结论.<br>设比n小而且与n互质的数为$A={n_1, n_2, \space\cdots\space, n_r}$, 其中$r=\phi(n)$. 再构造一个数列$B={rem(pn_1, n), rem(pn_2, n), \space\cdots\space, rem(pn_r, n)}$. 显然有$(rem(pn_1, n) &lt; n-1) \land (gcd(rem(pn_1, n), n)=1) \land (B中元素两两不同)$.<br>综合这三个条件可以得出: B是A的一个全排列.<br>那么就有：</p>
+<blockquote>
+<p>$n_1 \cdot n_2 \cdots n_r$<br>$=rem(pn_1, n)\cdot rem(pn_2, n) \cdots rem(pn_r, n)$<br>$\equiv pn_1 \cdot \cdots \cdot pn_r$<br>$=p^{phi(n)}\cdot n_1 \cdot n_2 \cdots n_r(mod \space n)$<br>$消去, 得1 \equiv p^{phi(n)}(mod\space n)$</p>
+</blockquote>
+<h3 id="RSA"><a href="#RSA" class="headerlink" title="RSA"></a>RSA</h3><p>那么终于来到了最后一步, 也就是传说中的RSA. 我们先来给出RSA的加密解密步骤, 然后再来证明其正确性.<br>步骤是抄来的, 懒得翻译了. </p>
+<blockquote>
+<ol>
+<li>Generate two distinct primes, p and q. Since they can be used to<br>generate the secret key, they must be kept hidden. </li>
+<li>Let n = pq. </li>
+<li>Select an integer e such that $gcd(ed, (p-1)(q-1)) = 1$.<br>The public key is the pair (e, n). This should be distributed widely. </li>
+<li>Compute d such that $de \equiv 1(mod\space (p-1)(q-1)$. This can be done using the Pulverizer.<br>The secret key is the pair (d, n). This should be kept hidden!</li>
+<li>Encoding: Given a message m, the sender first checks that gcd(m, n) = 1 The<br>sender then encrypts message m to produce m’ using the public key:<br>$m’ = rem(m^e, n)$</li>
+<li>Decoding: The receiver decrypts message m’ back to message m using the secretkey:<br>$m = rem((m’)^d, n)$</li>
+</ol>
+</blockquote>
+<p>因为m比n小, 所以要证明这一堆东西的正确性, 只需要证明$(m’)^d \equiv m(mod \space n)$.<br>有了前面的铺垫, 证明变得及其简单：</p>
+<blockquote>
+<p>$m’ = rem(m^e, n) \implies m’ \equiv m^e(mod\space n) \implies (m’)^d \equiv m^{ed}(mod\space n)$<br>$de \equiv 1(mod\space (p-1)(q-1) \implies de=1+r(p-1)(q-1)$<br>$所以, (m’)^d \equiv m\times m^{r(p-1)(q-1)}(mod\space n)$<br>$\implies (m’)^d \equiv m(mod \space n)$</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2016/08/18/rsa/" data-id="cis0862el00030gnixnkln8bq" class="article-share-link" data-share="baidu">分享到</a>
+      
+
+      
+        <a href="http://yoursite.com/2016/08/18/rsa/#ds-thread" class="article-comment-link">評論</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mathematics-for-Computer-Science/">Mathematics for Computer Science</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Number-Theory/">Number Theory</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-x86-mem-virtualization" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/08/17/x86-mem-virtualization/" class="article-date">
@@ -120,11 +227,11 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/08/17/x86-mem-virtualization/" data-id="cirz3ld0500040mniq3zft3s3" class="article-share-link" data-share="baidu">Share</a>
+        <a data-url="http://yoursite.com/2016/08/17/x86-mem-virtualization/" data-id="cis0862eq00060gni00mbexv2" class="article-share-link" data-share="baidu">分享到</a>
       
 
       
-        <a href="http://yoursite.com/2016/08/17/x86-mem-virtualization/#ds-thread" class="article-comment-link">Comments</a>
+        <a href="http://yoursite.com/2016/08/17/x86-mem-virtualization/#ds-thread" class="article-comment-link">評論</a>
       
 
       
@@ -243,11 +350,11 @@ int main()
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/08/17/virtio-host-guest-communication/" data-id="cirz3ld0200030mni935xkwj9" class="article-share-link" data-share="baidu">Share</a>
+        <a data-url="http://yoursite.com/2016/08/17/virtio-host-guest-communication/" data-id="cis0862em00040gni8pge4pxt" class="article-share-link" data-share="baidu">分享到</a>
       
 
       
-        <a href="http://yoursite.com/2016/08/17/virtio-host-guest-communication/#ds-thread" class="article-comment-link">Comments</a>
+        <a href="http://yoursite.com/2016/08/17/virtio-host-guest-communication/#ds-thread" class="article-comment-link">評論</a>
       
 
       
@@ -304,11 +411,11 @@ int main()
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/08/17/buffer-over-flow/" data-id="cirz3lczr00000mniogw5163g" class="article-share-link" data-share="baidu">Share</a>
+        <a data-url="http://yoursite.com/2016/08/17/buffer-over-flow/" data-id="cis0862ec00000gnistc5dbi4" class="article-share-link" data-share="baidu">分享到</a>
       
 
       
-        <a href="http://yoursite.com/2016/08/17/buffer-over-flow/#ds-thread" class="article-comment-link">Comments</a>
+        <a href="http://yoursite.com/2016/08/17/buffer-over-flow/#ds-thread" class="article-comment-link">評論</a>
       
 
       
@@ -350,7 +457,7 @@ int main()
 <h2 id="问题的形式化描述"><a href="#问题的形式化描述" class="headerlink" title="问题的形式化描述"></a>问题的形式化描述</h2><hr>
 <p>对于上述的问题, 我们先对其进行形式化：</p>
 <blockquote>
-<p>$给定两个桶a,b,桶a的容量为va,桶b的容量为vb. 且假定va \leq vb.$<br>$可以进行的操作有：清空一个桶,填满一个桶和将一个桶的水倒入另一个桶中.$<br>$以(x,y)记某个时刻的状态,表示a桶中有x \space gal水, b桶中有y \space gal水.$<br>$对与一个给定的数字r(0 \leq r \leq vb),能否达到某个状态(x’,y’), 使得r = x’ \land r = y’?$</p>
+<p>$给定两个桶a,b,桶a的容量为va,桶b的容量为vb. 且假定va \leq vb.$<br>$可以进行的操作有：清空一个桶,填满一个桶和将一个桶的水倒入另一个桶中.$<br>$以(x,y)记某个时刻的状态,表示a桶中有x \space gal水, b桶中有y \space gal水.$<br>$对与一个给定的数字r(0 \leq r \leq vb),能否达到某个状态(x’,y’), 使得r = x’ \lor r = y’?$</p>
 </blockquote>
 <p>于是,整个过程是一个状态机,其起始状态为(0,0).可能的转换描述如下:</p>
 <blockquote>
@@ -375,7 +482,7 @@ int main()
 </blockquote>
 <p>(0,0)时显然成立,下面证对于转换$(x,y)\rightarrow(x+y-vb,vb), if \space x+y \geq vb$成立,其余类似.</p>
 <p>$let \space (x’,y’) \space be \space the \space next \space state$<br>$x’=x+y-vb, y’=vb$<br>$k|vb \implies k|y’$<br>$k|vb, k|x, k|y \implies k|x+y-vb \implies k|x’$<br>$P(n+1) \space holds$</p>
-<p>定理1得证.<br>于是,对于$va=3,vb=6,r=4$的情况,由于对于任何$(x,y)$都有$3|x \land 3|y$,故不可能有$x=4 \lor y=4$的状态.<br>那么能否描述出可能达到的状态所满足的性质呢.答案是肯定的首先可以确定的是所有状态$(x,y)$, 都满足x和y都是va,vb的线性组合,这是显然的.其次,有如下事实.</p>
+<p>定理1得证.<br>于是,对于$va=3,vb=6,r=4$的情况,由于对于任何$(x,y)$都有$3|x \land 3|y$,故不可能有$x=4 \lor y=4$的状态.<br>那么能否描述出可能达到的状态所满足的性质呢. 答案是肯定的. 首先可以确定的是所有状态$(x,y)$, 都满足x和y都是va,vb的线性组合,这是显然的. 其次,有如下事实.</p>
 <blockquote>
 <p>$定理2: 所有va和vb的线性组合l1和l2(0 \leq l1, l2 \leq vb)所组成的状态(l1, l2)都是可到达的.$</p>
 </blockquote>
@@ -410,11 +517,11 @@ int main()
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/08/17/gallon-jugs-and-euclid/" data-id="cirz3lczw00010mnim1zaa0iy" class="article-share-link" data-share="baidu">Share</a>
+        <a data-url="http://yoursite.com/2016/08/17/gallon-jugs-and-euclid/" data-id="cis0862eg00010gnicgmq5qsr" class="article-share-link" data-share="baidu">分享到</a>
       
 
       
-        <a href="http://yoursite.com/2016/08/17/gallon-jugs-and-euclid/#ds-thread" class="article-comment-link">Comments</a>
+        <a href="http://yoursite.com/2016/08/17/gallon-jugs-and-euclid/#ds-thread" class="article-comment-link">評論</a>
       
 
       
@@ -436,36 +543,31 @@ int main()
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">標簽</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mathematics-for-Computer-Science/">Mathematics for Computer Science</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Number-Theory/">Number Theory</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pieces/">Pieces</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Software-Security/">Software Security</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Virtualization/">Virtualization</a><span class="tag-list-count">2</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mathematics-for-Computer-Science/">Mathematics for Computer Science</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Number-Theory/">Number Theory</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pieces/">Pieces</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Software-Security/">Software Security</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Virtualization/">Virtualization</a><span class="tag-list-count">2</span></li></ul>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/Mathematics-for-Computer-Science/" style="font-size: 10px;">Mathematics for Computer Science</a> <a href="/tags/Number-Theory/" style="font-size: 10px;">Number Theory</a> <a href="/tags/Pieces/" style="font-size: 10px;">Pieces</a> <a href="/tags/Software-Security/" style="font-size: 10px;">Software Security</a> <a href="/tags/Virtualization/" style="font-size: 20px;">Virtualization</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">歸檔</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">5</span></li></ul>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/08/18/rsa/">21天精通RSA(误)</a>
+          </li>
         
           <li>
             <a href="/2016/08/17/x86-mem-virtualization/">x86内存虚拟化技术</a>
@@ -490,7 +592,7 @@ int main()
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Links</h3>
+    <h3 class="widget-title">友情鏈接</h3>
     <div class="widget">
       <ul>
         
@@ -535,7 +637,7 @@ int main()
 </nav>
   <!-- totop start -->
 <div id="totop">
-<a title="totop"><img src="/img/scrollup.png"/></a>
+<a title="返回頂部"><img src="/img/scrollup.png"/></a>
 </div>
 
 <!-- totop end -->

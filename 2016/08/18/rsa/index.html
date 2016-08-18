@@ -4,24 +4,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>倒水问题与欧几里德 | BLOG - Blackskygg&#39;s LOG</title>
+  <title>21天精通RSA(误) | BLOG - Blackskygg&#39;s LOG</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="这个系列是MIT Open Courseware Mathematics for Computer Science^1的记录
-倒水问题
-有这么一个游戏：有两个桶a和b,容量分别是3 gal和5 gal,然后让你用这两个桶量出4 gal水来.如果用(a中剩余的水, b中剩余的水)来表示一个状态的话,整个过程表述如下:$$(0, 0)\rightarrow(3, 0)\rightarrow(0, 3)">
+同余a与b模n同余, 记作$a \equiv b(mod \space n)$, 如同字面上的意思, 它表示$rem(a, n) = rem(b, n)$. 等价地, 它还表示$n|(a-b)$.考察$a = kn + rem(a, n)$, 发现$n|rem(a, n)-">
 <meta property="og:type" content="article">
-<meta property="og:title" content="倒水问题与欧几里德">
-<meta property="og:url" content="http://yoursite.com/2016/08/17/gallon-jugs-and-euclid/index.html">
+<meta property="og:title" content="21天精通RSA(误)">
+<meta property="og:url" content="http://yoursite.com/2016/08/18/rsa/index.html">
 <meta property="og:site_name" content="BLOG - Blackskygg's LOG">
 <meta property="og:description" content="这个系列是MIT Open Courseware Mathematics for Computer Science^1的记录
-倒水问题
-有这么一个游戏：有两个桶a和b,容量分别是3 gal和5 gal,然后让你用这两个桶量出4 gal水来.如果用(a中剩余的水, b中剩余的水)来表示一个状态的话,整个过程表述如下:$$(0, 0)\rightarrow(3, 0)\rightarrow(0, 3)">
-<meta property="og:updated_time" content="2016-08-18T01:29:40.392Z">
+同余a与b模n同余, 记作$a \equiv b(mod \space n)$, 如同字面上的意思, 它表示$rem(a, n) = rem(b, n)$. 等价地, 它还表示$n|(a-b)$.考察$a = kn + rem(a, n)$, 发现$n|rem(a, n)-">
+<meta property="og:updated_time" content="2016-08-18T15:10:48.411Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="倒水问题与欧几里德">
+<meta name="twitter:title" content="21天精通RSA(误)">
 <meta name="twitter:description" content="这个系列是MIT Open Courseware Mathematics for Computer Science^1的记录
-倒水问题
-有这么一个游戏：有两个桶a和b,容量分别是3 gal和5 gal,然后让你用这两个桶量出4 gal水来.如果用(a中剩余的水, b中剩余的水)来表示一个状态的话,整个过程表述如下:$$(0, 0)\rightarrow(3, 0)\rightarrow(0, 3)">
+同余a与b模n同余, 记作$a \equiv b(mod \space n)$, 如同字面上的意思, 它表示$rem(a, n) = rem(b, n)$. 等价地, 它还表示$n|(a-b)$.考察$a = kn + rem(a, n)$, 发现$n|rem(a, n)-">
 <meta name="twitter:creator" content="@blackskygg">
 <link rel="publisher" href="blackskygg@gmail.com">
   
@@ -75,10 +72,10 @@
   </div>
 </header>
     <div class="outer">
-      <section id="main"><article id="post-gallon-jugs-and-euclid" class="article article-type-post" itemscope itemprop="blogPost">
+      <section id="main"><article id="post-rsa" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/08/17/gallon-jugs-and-euclid/" class="article-date">
-  <time datetime="2016-08-17T09:28:03.000Z" itemprop="datePublished">2016-08-17</time>
+    <a href="/2016/08/18/rsa/" class="article-date">
+  <time datetime="2016-08-18T09:57:30.000Z" itemprop="datePublished">2016-08-18</time>
 </a>
     
   </div>
@@ -89,7 +86,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      倒水问题与欧几里德
+      21天精通RSA(误)
     </h1>
   
 
@@ -98,77 +95,78 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>这个系列是MIT Open Courseware Mathematics for Computer Science<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-042j-mathematics-for-computer-science-fall-2010/" target="_blank" rel="external">^1</a>的记录</p>
-<h2 id="倒水问题"><a href="#倒水问题" class="headerlink" title="倒水问题"></a>倒水问题</h2><hr>
-<p>有这么一个游戏：有两个桶a和b,容量分别是3 gal和5 gal,然后让你用这两个桶量出4 gal水来.如果用(a中剩余的水, b中剩余的水)来表示一个状态的话,整个过程表述如下:<br>$$(0, 0)\rightarrow(3, 0)\rightarrow(0, 3)\rightarrow(3, 3)\rightarrow(1, 5)\rightarrow(1, 0)\rightarrow(0, 1)\rightarrow(3, 1)\rightarrow(0, 4)$$</p>
-<p>但是如果把a和b的容量换成3 gal和6 gal呢,还能量出刚好4 gal吗？直觉告诉我们不能.接下来为这个直觉寻找理论依据.</p>
-<h2 id="问题的形式化描述"><a href="#问题的形式化描述" class="headerlink" title="问题的形式化描述"></a>问题的形式化描述</h2><hr>
-<p>对于上述的问题, 我们先对其进行形式化：</p>
+<h2 id="同余"><a href="#同余" class="headerlink" title="同余"></a>同余</h2><p>a与b模n同余, 记作$a \equiv b(mod \space n)$, 如同字面上的意思, 它表示$rem(a, n) = rem(b, n)$. 等价地, 它还表示$n|(a-b)$.<br>考察$a = kn + rem(a, n)$, 发现$n|rem(a, n)-a$, 那么就有：</p>
 <blockquote>
-<p>$给定两个桶a,b,桶a的容量为va,桶b的容量为vb. 且假定va \leq vb.$<br>$可以进行的操作有：清空一个桶,填满一个桶和将一个桶的水倒入另一个桶中.$<br>$以(x,y)记某个时刻的状态,表示a桶中有x \space gal水, b桶中有y \space gal水.$<br>$对与一个给定的数字r(0 \leq r \leq vb),能否达到某个状态(x’,y’), 使得r = x’ \lor r = y’?$</p>
+<ol>
+<li>$a \equiv rem(a, n)(mod \space n)$</li>
+</ol>
 </blockquote>
-<p>于是,整个过程是一个状态机,其起始状态为(0,0).可能的转换描述如下:</p>
+<p>同余关系是等价关系, 因此自反, 传递且对称. 除此之外, 以下性质值得注意: </p>
 <blockquote>
-<ul>
-<li>$(x,y)\rightarrow(va,x).$</li>
-<li>$(x,y)\rightarrow(x,vb).$</li>
-<li>$(x,y)\rightarrow(0,y).$</li>
-<li>$(x,y)\rightarrow(x,0).$</li>
-<li>$(x,y)\rightarrow(x+y-vb,vb), if \space x+y \geq vb$</li>
-<li>$(x,y)\rightarrow(0,x+y), if \space x+y \leq vb$</li>
-<li>$(x,y)\rightarrow(va,x+y-va), if \space x+y \geq va$</li>
-<li>$(x,y)\rightarrow(x+y,0), if \space x+y \leq va$</li>
-</ul>
+<ol>
+<li>$a \equiv b (mod \space n)\implies a+c \equiv b+c(mod \space n)$</li>
+<li>$a \equiv b (mod \space n)\implies ac \equiv bc(mod \space n)$</li>
+<li>$a \equiv b (mod \space n) \land c \equiv d (mod \space n) \implies a+b \equiv c+d(mod \space n)$</li>
+<li>$a \equiv b (mod \space n) \land c \equiv d (mod \space n) \implies ac \equiv bd(mod \space n)$</li>
+</ol>
 </blockquote>
-<h2 id="问题的几个结论"><a href="#问题的几个结论" class="headerlink" title="问题的几个结论"></a>问题的几个结论</h2><hr>
+<p>这里只是证明一下4, 而3的证明类似, 其余的比较明显. </p>
 <blockquote>
-<p>$定理1: \forall k \forall(x,y)(k|va \land k|vb \rightarrow k|x \land k|y).$</p>
+<p>$a \equiv b (mod \space n) \implies ac \equiv bc(mod \space n)$<br>$c \equiv d (mod \space n) \implies bc \equiv bd(mod \space n)$<br>$由传递性, ac \equiv bd(mod \space n)$</p>
 </blockquote>
-<p>可以很简单地用归纳法对以下invariant进行证明.</p>
+<p>事实上, 在我瞎折腾的过程中, 发现由传递性还可以得到另一个有趣的结果. 如果p, q互质, 那么有$tp \equiv 1(mod \space q)$, 此时如果有另一个数r满足$(r \equiv p(mod \space q)$的话, 由于$(tr \equiv tp(mod \space q)$, 故$tr \equiv 1(mod \space q)$, 也就是r, q互质.<br>也就是说. 如果p, q互质, 且r与p模q同余, 则, r与q也互质. </p>
+<p>这里只有$+-\times$, 但是却没有$/$. 考察$ka \equiv kb(mod \space n)$, 什么情况下能够把k从两边消掉呢.<br>之前说过$a \equiv b(mod \space n) \iff  n|(a-b)$, 那么也有$ka \equiv kb(mod \space n) \iff  n|k(a-b)$.<br>也就是说只要能保证$n|k(a-b) \implies n|(a-b)$就能保证$ka \equiv kb(mod \space n) \implies a \equiv b(mod \space n)$.<br>那么有一点是肯定的, 那就是n和k如果互质(relatively prime)的话, 那么必然满足上述条件, 当然也存在其它满足的情况, 有兴趣的可以深究, 但是现在我们只要知道以下事实就够了. </p>
 <blockquote>
-<p>$P(n): (x,y)为n轮转换后的状态 \rightarrow k|x \land k|y.$</p>
+<ol>
+<li>$如果a, b互质, 有ka \equiv kb(mod \space n) \implies a \equiv b(mod \space n)$</li>
+</ol>
 </blockquote>
-<p>(0,0)时显然成立,下面证对于转换$(x,y)\rightarrow(x+y-vb,vb), if \space x+y \geq vb$成立,其余类似.</p>
-<p>$let \space (x’,y’) \space be \space the \space next \space state$<br>$x’=x+y-vb, y’=vb$<br>$k|vb \implies k|y’$<br>$k|vb, k|x, k|y \implies k|x+y-vb \implies k|x’$<br>$P(n+1) \space holds$</p>
-<p>定理1得证.<br>于是,对于$va=3,vb=6,r=4$的情况,由于对于任何$(x,y)$都有$3|x \land 3|y$,故不可能有$x=4 \lor y=4$的状态.<br>那么能否描述出可能达到的状态所满足的性质呢. 答案是肯定的. 首先可以确定的是所有状态$(x,y)$, 都满足x和y都是va,vb的线性组合,这是显然的. 其次,有如下事实.</p>
+<p>前一篇文章<a href="/2016/08/17/x86-mem-virtualization/">^2</a>曾经说过, gcd(a, b)实际上是a和b的最小线性组合. 而a, b互质又可以写成gcd(a, b)=1, 亦即$\exists t, a, 使得ta+sb=1$, 也就是说$ta \equiv 1(mod \space b)$.<br>我们定义t为a在mod b条件下的乘法逆元. 如此一来, 我们就有: </p>
 <blockquote>
-<p>$定理2: 所有va和vb的线性组合l1和l2(0 \leq l1, l2 \leq vb)所组成的状态(l1, l2)都是可到达的.$</p>
+<ol>
+<li>$如果a, n互质, 则存在a在mod \space n条件下的乘法逆元$</li>
+</ol>
 </blockquote>
-<p>首先,注意到对于任意的$l=p \times va + q \times vb(0 \leq l \leq vb)$, 无论p的正负, 都有办法写成$l=p’ \times va + q’ \times vb, p \gt 0$的形式.<br>理由如下：<br>对于$l=p \times va + q \times vb$,有$l=(p + m \times vb)\times va+(q-m \times va) \times vb$.<br>于是可以通过调整m的大小来将$p’=p + m \times vb$变为正数.<br>而对于$l=p’ \times va + q’ \times vb, p \gt 0$, 可以通过以下算法得到.</p>
-<pre><code>for i in [0, p&apos;) {
-    fill a;
-    while (a is not empty) {
-        if b is full {
-            empty b;
-        }
-        pour all the water in a into b;
-    }
-}
-</code></pre><p>设最后的状态为$(x’, y’)$, 不难看出有$x’ = 0 \land y’ = p’ \times va + h \times vb$, 而由于限制条件$(0 \leq l \leq vb)$的存在. 可以得到$h=q’, 故y’ = l$. 目的达到. 定理二得证.</p>
-<p>再回到定理1.<br>在众多满足条件的k中,gcd(va, vb)应该算是比较特殊的,而计算gcd(va, vb)的方法中,最常用的就是欧几里德算法.其证明也相对简单（只需证对于$a = p \times b + rem(a,b), 有gcd(a, b) = gcd(p, rem(a,b)$即可）.<br>那么问题来了, gcd(va, vb)是否是va, vb的一个线性组合呢？ 如果是的话. 由于所有va, vb在$(0, vb]$内的线性组合$l$都有$gcd(va,vb)|l$, 故gcd(va, vb)就有了一个新身份:<br>va, vb的最小正线性组合！<br>事实是不仅有, 而且还能很方便的算出线性组合系数,这个计算的方法,就是扩展欧几里德算法.</p>
-<h2 id="扩展欧几里德"><a href="#扩展欧几里德" class="headerlink" title="扩展欧几里德"></a>扩展欧几里德</h2><hr>
-<p>首先还是来证明一下这一点:</p>
+<h2 id="欧拉函数"><a href="#欧拉函数" class="headerlink" title="欧拉函数"></a>欧拉函数</h2><p>介绍完同余, 来看看欧拉函数.<br>欧拉函数$\phi(n)$定义为小于n且于n互质的数的个数.<br>对于质数p, 显然有$\phi(p)=p-1$.<br>然后再来考察一堆互质的数p, q, 令r=pq. 定义比n小且与n互质的数的集合为Zn.<br>由p, q互质可知, 对于任意的一个$k \in Zr$, 都存在$ap + bq=k(mod \space r)$, 而且在mod r的语境下可以将a调整在(0, q), b调整到(0, p). 显然满足上述区间的a, b唯一(考虑$(a+mq)p+(b-mq-tq)p=k$), 而且a跟q互质, b跟p互质(否则与$k \in Zr$矛盾), 亦即$a \in Zq \land b \in Zp$. 于是有一个从$Zr$到$Zq \times Zp$的双射, 于是$\phi(pq) = \phi(p) \times \phi(q)$. 特别地, 如果p, q都是质数, 则$\phi(pq) = (p-1)(q-1)$. (事实上, 还可以用中国余剩定理反过来建立映射, 也可以证明).<br>由于合数可以唯一地表示为质数幂的乘积(算术基本定理), 一个自然的想法是研究质数幂的计算方法, 这样就可以构造出任意欧拉函数的计算方法了.<br>考察质数的幂$p^k$, 由于比p小且与p不互质的数有$(p, 2p, \space \cdots \space, (p^{k-1}-1)p)$共$p^{k-1}$个, 于是$\phi(p^{k})=p^k-p^{k-1}$.<br>那么就得到任何数的欧拉函数计算方法: </p>
 <blockquote>
-<p>$定理3:gcd(a,b)是a,b的一个线性组合.$</p>
+<ol>
+<li>$\phi(n)=n\Pi(1- \frac{1}{p_1})$</li>
+</ol>
 </blockquote>
-<p>首先来证明:</p>
+<p>(其实推了那么多对于RSA并没有什么卵用, 只是推着玩玩, 真正有用的只有”如果p, q都是质数, 则$\phi(pq) = (p-1)(q-1)$”这一句)</p>
+<h3 id="费马小定理"><a href="#费马小定理" class="headerlink" title="费马小定理"></a>费马小定理</h3><p>介绍欧拉函数之后之后, 就可以开始介绍费马小定理了. 费马小定理是这样说的: </p>
 <blockquote>
-<p>$如果x, y都是a和b的线性组合, 那么rem(x, y)也是a和b的线性组合$</p>
+<p>$gcd(q, n)=1 \implies q^{\phi(n)} \equiv 1(mod \space n)$</p>
 </blockquote>
-<p>这很显然：</p>
+<p>这看起来就有点吓人了, 但其实有了前面的铺垫, 证明起来还是很简单的. 首先来证明一个小结论.<br>设比n小而且与n互质的数为$A={n_1, n_2, \space\cdots\space, n_r}$, 其中$r=\phi(n)$. 再构造一个数列$B={rem(pn_1, n), rem(pn_2, n), \space\cdots\space, rem(pn_r, n)}$. 显然有$(rem(pn_1, n) &lt; n-1) \land (gcd(rem(pn_1, n), n)=1) \land (B中元素两两不同)$.<br>综合这三个条件可以得出: B是A的一个全排列.<br>那么就有：</p>
 <blockquote>
-<p>$令x=p1 \times a+q1 \times b, y=p2 \times a+q2 \times b$<br>$令x = k \times y + rem(x,y)$<br>$有rem(x,y) = x - k \times y \implies rem(x,y)=p1 \times a+q1 \times b -k \times p2 \times a - k \times q2 \times b$<br>$\implies rem(x,y)=(p1 - k \times p2) \times a + (q1 - k \times q2) \times b$<br>$\implies rem(x,y)为a和b的线性组合$</p>
+<p>$n_1 \cdot n_2 \cdots n_r$<br>$=rem(pn_1, n)\cdot rem(pn_2, n) \cdots rem(pn_r, n)$<br>$\equiv pn_1 \cdot \cdots \cdot pn_r$<br>$=p^{phi(n)}\cdot n_1 \cdot n_2 \cdots n_r(mod \space n)$<br>$消去, 得1 \equiv p^{phi(n)}(mod\space n)$</p>
 </blockquote>
-<p>也就是说在欧几里德算法计算出的序列$(a, b)\rightarrow(b, rem(b,a))\rightarrow\cdots\rightarrow(x,y)\rightarrow\cdots\rightarrow(rem(t1, t2), 0)$中.<br>由归纳法可知，对于任意一个中间结果$(x, y)$，都有x和y是b的线性组合. 而最终的结果$rem(t1, t2) = gcd(a, b)$, 自然也是a和b的一个线性组合.<br>至于扩展欧几里德算法本身，已经包含在上面的证明中了。</p>
+<h3 id="RSA"><a href="#RSA" class="headerlink" title="RSA"></a>RSA</h3><p>那么终于来到了最后一步, 也就是传说中的RSA. 我们先来给出RSA的加密解密步骤, 然后再来证明其正确性.<br>步骤是抄来的, 懒得翻译了. </p>
+<blockquote>
+<ol>
+<li>Generate two distinct primes, p and q. Since they can be used to<br>generate the secret key, they must be kept hidden. </li>
+<li>Let n = pq. </li>
+<li>Select an integer e such that $gcd(ed, (p-1)(q-1)) = 1$.<br>The public key is the pair (e, n). This should be distributed widely. </li>
+<li>Compute d such that $de \equiv 1(mod\space (p-1)(q-1)$. This can be done using the Pulverizer.<br>The secret key is the pair (d, n). This should be kept hidden!</li>
+<li>Encoding: Given a message m, the sender first checks that gcd(m, n) = 1 The<br>sender then encrypts message m to produce m’ using the public key:<br>$m’ = rem(m^e, n)$</li>
+<li>Decoding: The receiver decrypts message m’ back to message m using the secretkey:<br>$m = rem((m’)^d, n)$</li>
+</ol>
+</blockquote>
+<p>因为m比n小, 所以要证明这一堆东西的正确性, 只需要证明$(m’)^d \equiv m(mod \space n)$.<br>有了前面的铺垫, 证明变得及其简单：</p>
+<blockquote>
+<p>$m’ = rem(m^e, n) \implies m’ \equiv m^e(mod\space n) \implies (m’)^d \equiv m^{ed}(mod\space n)$<br>$de \equiv 1(mod\space (p-1)(q-1) \implies de=1+r(p-1)(q-1)$<br>$所以, (m’)^d \equiv m\times m^{r(p-1)(q-1)}(mod\space n)$<br>$\implies (m’)^d \equiv m(mod \space n)$</p>
+</blockquote>
 
       
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/08/17/gallon-jugs-and-euclid/" data-id="cis0862eg00010gnicgmq5qsr" class="article-share-link" data-share="baidu">分享到</a>
+        <a data-url="http://yoursite.com/2016/08/18/rsa/" data-id="cis0862el00030gnixnkln8bq" class="article-share-link" data-share="baidu">分享到</a>
       
 
       
-        <a href="http://yoursite.com/2016/08/17/gallon-jugs-and-euclid/#ds-thread" class="article-comment-link">評論</a>
+        <a href="http://yoursite.com/2016/08/18/rsa/#ds-thread" class="article-comment-link">評論</a>
       
 
       
@@ -180,15 +178,11 @@
     
 <nav id="article-nav">
   
-    <a href="/2016/08/17/buffer-over-flow/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">
-        
-          Buffer Over Flow
-        
-      </div>
-    </a>
   
+    <a href="/2016/08/17/x86-mem-virtualization/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">x86内存虚拟化技术</div>
+    </a>
   
 </nav>
 
@@ -197,7 +191,7 @@
 
 
   <section id="comments">
-    <div id="ds-thread" class="ds-thread" data-thread-key="2016/08/17/gallon-jugs-and-euclid/" data-title="倒水问题与欧几里德" data-url="http://yoursite.com/2016/08/17/gallon-jugs-and-euclid/"></div>
+    <div id="ds-thread" class="ds-thread" data-thread-key="2016/08/18/rsa/" data-title="21天精通RSA(误)" data-url="http://yoursite.com/2016/08/18/rsa/"></div>
   </section>
 </section>
       
