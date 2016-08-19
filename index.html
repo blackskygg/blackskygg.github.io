@@ -128,17 +128,17 @@
 <h2 id="欧拉函数"><a href="#欧拉函数" class="headerlink" title="欧拉函数"></a>欧拉函数</h2><p>介绍完同余, 来看看欧拉函数.<br>欧拉函数$\phi(n)$定义为小于n且于n互质的数的个数.<br>对于质数p, 显然有$\phi(p)=p-1$.<br>然后再来考察一堆互质的数p, q, 令r=pq. 定义比n小且与n互质的数的集合为Zn.<br>由p, q互质可知, 对于任意的一个$k \in Zr$, 都存在$ap + bq=k(mod \space r)$, 而且在mod r的语境下可以将a调整在(0, q), b调整到(0, p). 显然满足上述区间的a, b唯一(考虑$(a+mq)p+(b-mq-tq)p=k$), 而且a跟q互质, b跟p互质(否则与$k \in Zr$矛盾), 亦即$a \in Zq \land b \in Zp$. 于是有一个从$Zr$到$Zq \times Zp$的双射, 于是$\phi(pq) = \phi(p) \times \phi(q)$. 特别地, 如果p, q都是质数, 则$\phi(pq) = (p-1)(q-1)$. (事实上, 还可以用中国余剩定理反过来建立映射, 也可以证明).<br>由于合数可以唯一地表示为质数幂的乘积(算术基本定理), 一个自然的想法是研究质数幂的计算方法, 这样就可以构造出任意欧拉函数的计算方法了.<br>考察质数的幂$p^k$, 由于比p小且与p不互质的数有$(p, 2p, \space \cdots \space, (p^{k-1}-1)p)$共$p^{k-1}$个, 于是$\phi(p^{k})=p^k-p^{k-1}$.<br>那么就得到任何数的欧拉函数计算方法: </p>
 <blockquote>
 <ol>
-<li>$\phi(n)=n\Pi(1- \frac{1}{p_1})$</li>
+<li>$\phi(n)=n\times\prod\limits_{p_i \in n的质因数} (1- \frac{1}{p_i})$</li>
 </ol>
 </blockquote>
 <p>(其实推了那么多对于RSA并没有什么卵用, 只是推着玩玩, 真正有用的只有”如果p, q都是质数, 则$\phi(pq) = (p-1)(q-1)$”这一句)</p>
 <h3 id="费马小定理"><a href="#费马小定理" class="headerlink" title="费马小定理"></a>费马小定理</h3><p>介绍欧拉函数之后之后, 就可以开始介绍费马小定理了. 费马小定理是这样说的: </p>
 <blockquote>
-<p>$gcd(q, n)=1 \implies q^{\phi(n)} \equiv 1(mod \space n)$</p>
+<p>$gcd(p, n)=1 \implies p^{\phi(n)} \equiv 1(mod \space n)$</p>
 </blockquote>
 <p>这看起来就有点吓人了, 但其实有了前面的铺垫, 证明起来还是很简单的. 首先来证明一个小结论.<br>设比n小而且与n互质的数为$A={n_1, n_2, \space\cdots\space, n_r}$, 其中$r=\phi(n)$. 再构造一个数列$B={rem(pn_1, n), rem(pn_2, n), \space\cdots\space, rem(pn_r, n)}$. 显然有$(rem(pn_1, n) &lt; n-1) \land (gcd(rem(pn_1, n), n)=1) \land (B中元素两两不同)$.<br>综合这三个条件可以得出: B是A的一个全排列.<br>那么就有：</p>
 <blockquote>
-<p>$n_1 \cdot n_2 \cdots n_r$<br>$=rem(pn_1, n)\cdot rem(pn_2, n) \cdots rem(pn_r, n)$<br>$\equiv pn_1 \cdot \cdots \cdot pn_r$<br>$=p^{phi(n)}\cdot n_1 \cdot n_2 \cdots n_r(mod \space n)$<br>$消去, 得1 \equiv p^{phi(n)}(mod\space n)$</p>
+<p>$n_1 \cdot n_2 \cdots n_r$<br>$=rem(pn_1, n)\cdot rem(pn_2, n) \cdots rem(pn_r, n)$<br>$\equiv pn_1 \cdot \cdots \cdot pn_r$<br>$=p^{\phi(n)}\cdot n_1 \cdot n_2 \cdots n_r(mod \space n)$<br>$消去, 得1 \equiv p^{\phi(n)}(mod\space n)$</p>
 </blockquote>
 <h3 id="RSA"><a href="#RSA" class="headerlink" title="RSA"></a>RSA</h3><p>那么终于来到了最后一步, 也就是传说中的RSA. 我们先来给出RSA的加密解密步骤, 然后再来证明其正确性.<br>步骤是抄来的, 懒得翻译了. </p>
 <blockquote>
@@ -160,7 +160,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://blackskygg.github.io/2016/08/18/rsa/" data-id="cis0h9poh0000k3ni9o0gofe0" class="article-share-link" data-share="baidu">Share</a>
+        <a data-url="https://blackskygg.github.io/2016/08/18/rsa/" data-id="cis1fmakm0001icnik1rlowyq" class="article-share-link" data-share="baidu">Share</a>
       
 
       
@@ -227,7 +227,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://blackskygg.github.io/2016/08/17/x86-mem-virtualization/" data-id="cis0h9pow0004k3nitmim0bhr" class="article-share-link" data-share="baidu">Share</a>
+        <a data-url="https://blackskygg.github.io/2016/08/17/x86-mem-virtualization/" data-id="cis1fmakt0004icnih8l8wnav" class="article-share-link" data-share="baidu">Share</a>
       
 
       
@@ -350,7 +350,7 @@ int main()
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://blackskygg.github.io/2016/08/17/virtio-host-guest-communication/" data-id="cis0h9pos0003k3nis4w4kkxo" class="article-share-link" data-share="baidu">Share</a>
+        <a data-url="https://blackskygg.github.io/2016/08/17/virtio-host-guest-communication/" data-id="cis1fmakr0003icnii6c3k925" class="article-share-link" data-share="baidu">Share</a>
       
 
       

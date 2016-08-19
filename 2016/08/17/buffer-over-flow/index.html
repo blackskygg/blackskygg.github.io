@@ -20,7 +20,7 @@ Definition
 A buffer overflow happens when more data is written to or read from a buffer than the buffer can hold.
 real examples
 In fact the fi">
-<meta property="og:updated_time" content="2016-08-17T14:12:50.497Z">
+<meta property="og:updated_time" content="2016-08-19T07:35:07.506Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Buffer Over Flow">
 <meta name="twitter:description" content="This is not a passage, but just some pieces of reminders.
@@ -119,13 +119,15 @@ In fact the fi">
 <h2 id="Beyond-NX"><a href="#Beyond-NX" class="headerlink" title="Beyond NX"></a>Beyond NX</h2><hr>
 <p>system()(the so-called return-to-libc technique) : useful , but sometimes system() don’t take arguments from stacks, and calling multiple function is hard<br>a number of ways to extend return-to-libc : nonetheless limited<br>return-oriented-programming (ROP) : using gadgets , each gadget follows a particular pattern: it performs some operation (putting a value in a register, writing to memory, adding two registers, etc.) followed by a return instruction, some times you can find a Turing-complete set of these, these instructions can even be used to change the current state of the pages, turning them into excutable</p>
 <h2 id="Getting-random"><a href="#Getting-random" class="headerlink" title="Getting random"></a>Getting random</h2><hr>
-<p>Address Space Layout Randomization (ASLR) : it randomizes the position of the stack and the in-memory location of libraries and executables<br>it’s useful but hard to apply to current systems : it’s ok for dlls, but hard for linux and exes, (compatibility, performance)<br>but the range the address can be is limited on x86 : total memory is limited, libs must stay as close as they can, code always start at the beginning of a page, etc<br>thus, if the chance is 1/256, you can try it out for 256 times and you’ll succeed<br>the situation is better on x64, guessing is almost impossible<br>browsers : javascript, flash(both contain JIT), PDF plugin, Microsoft’s Office browser plugins(old version didn’t enable ASLR)<br>A never-ending war<br>Powerful protective systems such as ASLR and NX raise the bar for taking advantage of flaws and together have put the days of the simple stack buffer overflow behind us, but smart attackers can still combine multiple flaws to defeat these protections.<br>Microsoft’s EMET (“Enhanced Mitigation Experience Toolkit”) includes a range of semi-experimental protections that try to detect heap spraying or attempts to call certain critical functions in ROP-based exploits. But in the continuing digital arms war, even these have security techniques that have been defeated.<br>the difficulty (and hence cost) of exploiting flaws goes up with each new mitigation technique—but it’s a reminder of the need for constant vigilance.</p>
+<p>Address Space Layout Randomization (ASLR) : it randomizes the position of the stack and the in-memory location of libraries and executables<br>it’s useful but hard to apply to current systems : it’s ok for dlls, but hard for linux and exes, (compatibility, performance)<br>but the range the address can be is limited on x86 : total memory is limited, libs must stay as close as they can, code always start at the beginning of a page, etc<br>thus, if the chance is 1/256, you can try it out for 256 times and you’ll succeed<br>the situation is better on x64, guessing is almost impossible<br>browsers : javascript, flash(both contain JIT), PDF plugin, Microsoft’s Office browser plugins(old version didn’t enable ASLR)</p>
+<h2 id="A-never-ending-war"><a href="#A-never-ending-war" class="headerlink" title="A never-ending war"></a>A never-ending war</h2><hr>
+<p>Powerful protective systems such as ASLR and NX raise the bar for taking advantage of flaws and together have put the days of the simple stack buffer overflow behind us, but smart attackers can still combine multiple flaws to defeat these protections.<br>Microsoft’s EMET (“Enhanced Mitigation Experience Toolkit”) includes a range of semi-experimental protections that try to detect heap spraying or attempts to call certain critical functions in ROP-based exploits. But in the continuing digital arms war, even these have security techniques that have been defeated.<br>the difficulty (and hence cost) of exploiting flaws goes up with each new mitigation technique—but it’s a reminder of the need for constant vigilance.</p>
 
       
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://blackskygg.github.io/2016/08/17/buffer-over-flow/" data-id="cis0h9pp00006k3ni348ezyxb" class="article-share-link" data-share="baidu">Share</a>
+        <a data-url="https://blackskygg.github.io/2016/08/17/buffer-over-flow/" data-id="cis1fmakh0000icnigjktesee" class="article-share-link" data-share="baidu">Share</a>
       
 
       
