@@ -191,8 +191,8 @@ window.onload = function() {
 
     function init() {
 	new_positions();
-	setInterval(draw, 30);
-	setInterval(new_positions, 3000);
+	setInterval(draw, 60);
+	setInterval(new_positions, 6000);
     }
 
     init();
