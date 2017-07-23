@@ -2,14 +2,4 @@ body { background: #003; text-align: center; font-family: "trebuchet ms" }
 
 canvas { left: 10%; position: absolute; top: 10%; margin-top: -50px; margin-left: -50px; }
 
-#gui { background: rgba(0, 60, 60, 0.5); padding: 4px; border-bottom: 1px solid rgba(0, 0, 0, 0.5); }
-
-label { color: #0aa; font-size: 11px; max-width: 60px; display: inline-block; vertical-align:middle }
-
-select { background: rgba(0, 0, 0, 0.5); color: #0ff; border-radius: 7px; border: 0; padding: 2px; font-size: 13px }
-
-option { background: #012; }
-
 .copy { position: absolute; bottom: 16px; right: 16px; color: #228 }
-
-a { color: #259 }
