@@ -46,7 +46,7 @@ window.onload = function() {
 
 
     total_area = W * H;
-    total_particles = 200000;
+    total_particles = 8000;
     single_particle_area = total_area / total_particles;
     area_length = Math.sqrt(single_particle_area);
     console.log(area_length);
