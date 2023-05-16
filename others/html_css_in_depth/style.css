@@ -1,0 +1,147 @@
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: #f7f7f7;
+    color: #0c1b54;
+}
+
+img {
+    display: block;
+    margin: auto;
+}
+
+header img {
+    height: 2rem;
+}
+
+ul {
+    list-style: none;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    text-transform: uppercase;
+}
+
+li {
+    padding: 0.5rem;
+    text-align: center;
+}
+
+li>a {
+    color: #0c1b54;
+    text-decoration: none;
+    font-size: 1rem;
+    text-decoration: underline;
+}
+
+li>a:hover {
+    font-weight: bold;
+}
+
+main {
+    flex-grow: 1;
+}
+
+#promotion {
+    background-image: url("ring.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+
+    height: 300px;
+
+    color: #ffffff;
+}
+
+#ring {
+    text-align: left;
+    margin: 1rem;
+}
+
+#best-seller {
+    text-align: center;
+}
+
+#best-seller div {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+
+#best-seller article {
+    flex-shrink: 0;
+
+    height: 270px;
+    width: 200px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-end;
+    margin: 1rem;
+
+    background-color: #ffffff;
+    background-size: contain;
+    background-position-x: center;
+    background-position-y: top;
+    background-repeat: no-repeat;    
+}
+
+#bracelet {    
+    background-image: url("bracelet.webp");    
+}
+
+#bracelet:hover {    
+    background-image: url("bracelet_hover.webp");
+    transition: 0.5s ease-in;
+}
+
+#earring {    
+    background-image: url("earring.webp");    
+}
+
+#earring:hover {    
+    background-image: url("earring_hover.webp");
+    transition: 0.5s ease-in;
+}
+
+#necklace {    
+    background-image: url("necklace.webp");    
+}
+
+#necklace:hover {    
+    background-image: url("necklace_hover.webp");
+    transition: 0.5s ease-in;
+}
+
+footer {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+footer img {
+    width: 100px;
+}
+
+footer div {
+    margin: 1rem;
+}
+
+footer p {
+    font-size: 0.8rem;
+}
+
+h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.1rem;    
+    padding-bottom: 0rem;
+}
+
+p { 
+    margin: 0.1rem;
+    padding-top: 0rem;
+    font-size: 1rem;
+}
